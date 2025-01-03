@@ -8,7 +8,6 @@ import 'swiper/css/pagination';
 import './styles.css';
 import { Autoplay } from 'swiper/modules';
 import { useState } from 'react';
-import { Button } from 'antd';
 
 import { InfoIcon, PlayIcon } from '@/icon';
 import { urlFilm } from '@/components/urlFilm/urlFilm';
