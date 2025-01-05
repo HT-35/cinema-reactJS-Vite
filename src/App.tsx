@@ -5,7 +5,10 @@ import Home from '@/pages/Home';
 import Movies from '@/pages/Movie';
 import NewPopular from '@/pages/NewPopular';
 import NotFound from '@/pages/NotFound';
-import Admin from '@/pages/Admin';
+import Admin from '@/layout/Admin';
+import Dashboard from '@/pages/Dashboard';
+import ListFlim from '@/pages/ListFlim';
+import UploadFlim from '@/pages/UploadFlim';
 
 function App() {
   return (
@@ -18,9 +21,12 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Route>
         <Route path="/admin" element={<Admin />}>
-          <Route index element={<></>}></Route>
-          <Route path="" element={<></>}></Route>
-          <Route path="" element={<></>}></Route>
+          <Route index element={<Dashboard></Dashboard>}></Route>
+          <Route path="/admin/flim" element={<ListFlim />}></Route>
+          <Route
+            path="/admin/upload"
+            element={<UploadFlim></UploadFlim>}
+          ></Route>
         </Route>
       </Routes>
     </BrowserRouter>

@@ -39,8 +39,8 @@ const ListCart = () => {
                 : item.name;
 
             return (
-              <SwiperSlide className="bg-slate-700 rounded-xl">
-                <Link key={index} to={`/movie/${item.name}`}>
+              <SwiperSlide key={index} className="bg-slate-700 rounded-xl">
+                <Link to={`/movie/${item.name}`}>
                   <Card urlFlim={item.url} name={nameFilm}></Card>
                 </Link>
               </SwiperSlide>

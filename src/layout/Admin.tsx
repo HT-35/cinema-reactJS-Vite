@@ -27,7 +27,7 @@ const menu = [
   },
   {
     name: 'Log Out',
-    url: '/admin/logout',
+    url: '#',
     icon: <FontAwesomeIcon icon={faRightFromBracket} />,
   },
 ];
@@ -36,9 +36,9 @@ const Admin = () => {
   const location = useLocation();
 
   return (
-    <div className="flex p-8 select-none">
-      <div className="flex flex-col gap-4 bg-white  rounded-lg text-black px-2">
-        <div className=" px-6 py-2 flex gap-2 items-center text-xl font-bold ">
+    <div className="flex p-8 gap-6 select-none">
+      <div className="basis-3/12 flex flex-col gap-4 bg-white  rounded-lg text-black px-2">
+        <div className=" px-6 py-6 flex gap-2 items-center text-xl font-bold ">
           <FontAwesomeIcon icon={faPhotoFilm} /> BRESS
         </div>
 
@@ -60,7 +60,7 @@ const Admin = () => {
         })}
       </div>
 
-      <div className="">
+      <div className="w-full basis-9/12  bg-white rounded-lg px-4">
         <Outlet></Outlet>
       </div>
     </div>
