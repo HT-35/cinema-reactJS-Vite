@@ -7,6 +7,14 @@ const UploadFlim = () => {
 
   const imageInput = useRef<HTMLInputElement>(null);
   const imgShowRef = useRef<HTMLImageElement>(null);
+
+  const [titleFlim, setTitleFlim] = useState<string>(
+    'Quá Nhanh Quá Nguy Hiểm 8'
+  );
+  const [description, setDescription] = useState<string>(
+    'Quá Nhanh Quá Nguy Hiểm 8 Fast & Furious 8 The Fate of the Furious 2017 Full HD Vietsub Thuyết Minh Phim Quá Nhanh Quá Nguy Hiểm 8: Cipher - kẻ phản diện chính sẽ bắt cóc cả gia đình Mia Toretto và Bian O Conner, đồng thời buộc Dom phải phản bội anh ta anh em. '
+  );
+
   useEffect(() => {
     const handleFileChange = () => {
       if (
@@ -19,14 +27,7 @@ const UploadFlim = () => {
           const media = URL.createObjectURL(file); // Tạo URL cho file
           imgShowRef.current.src = media; // Gán URL vào iframe
           imgShowRef.current.style.display = 'block'; // Hiển thị iframe
-          setDisableSendVideo(false);
-
-          const tempVideo = document.createElement('video');
-          tempVideo.src = media;
-          tempVideo.onloadedmetadata = () => {
-            setDuration(formatTime(tempVideo.duration));
-            tempVideo.remove();
-          };
+          //setDisableSendVideo(false);
         } else {
           imgShowRef.current.src = ''; // Gán URL vào iframe
           imgShowRef.current.style.display = 'none'; // Hiển thị iframe
@@ -57,8 +58,12 @@ const UploadFlim = () => {
         const file = videoInput.current.files[0]; // Lấy file đầu tiên
         if (file) {
           const media = URL.createObjectURL(file); // Tạo URL cho file
-          iframeRef.current.src = media; // Gán URL vào iframe
+          iframeRef.current.src = `${media}#t=0&muted=1`;
+
+          iframeRef.current.src = `${media}`;
+
           iframeRef.current.style.display = 'block'; // Hiển thị iframe
+
           setDisableSendVideo(false);
 
           const tempVideo = document.createElement('video');
@@ -88,13 +93,6 @@ const UploadFlim = () => {
     };
   }, []);
 
-  console.log('');
-  console.log('');
-  console.log('duration  :', duration);
-  console.log('');
-  console.log('');
-  console.log('');
-
   const uploadVideo = async () => {
     if (
       !videoInput.current ||
@@ -113,71 +111,74 @@ const UploadFlim = () => {
     formData.append('files', videoInput.current.files[0]); // Thêm video
     formData.append('files', imageInput.current.files[0]); // Thêm ảnh
 
-    //formData.append('file', videoInput?.current?.files[0]);
-
-    //const data = {
-    //  nameFilm: 'Fast and Furious',
-    //  duration: duration,
-    //  description: 'Fast and Furious',
-    //  formData,
-    //};
-
     // Append other fields
-    formData.append('nameFilm', 'Fast and Furious');
+    formData.append('nameFilm', titleFlim);
+    formData.append('description', description);
     formData.append('duration', duration);
-    formData.append('description', 'Fast and Furious');
 
-    try {
-      const response = await fetch('http://localhost:3000/flim', {
-        method: 'POST',
-        body: formData,
-      });
-      const result = await response.json();
-      console.log('File uploaded:', result);
-    } catch (error) {
-      console.error('Error uploading file:', error);
-    }
+    const response = await fetch('http://localhost:3000/flim', {
+      method: 'POST',
+      body: formData,
+    });
+    const result = await response.json();
+    console.log('File uploaded:', result);
   };
 
   return (
     <div className="">
       <div className="text-center text-3xl font-bold px-6 py-6">UploadFlim</div>
 
-      <FormUploadFilm />
-
-      <input ref={imageInput} type="file" accept="image/*" name="input_image" />
-
-      <div className="max-w-[500px] mx-auto my-2">
-        {/*{imgShowRef.current && (
-        )}*/}
-        <img
-          ref={imgShowRef}
-          src=""
-          alt=""
-          className="w-[500px] h-[400px] object-cover"
-        />
-      </div>
-
-      <div className="flex flex-col pb-4 ">
-        <label>Choose a video file to process:</label>
-        <input
-          ref={videoInput}
-          type="file"
-          id="input"
-          name="input_video"
-          accept="image/*"
+      <div className="flex flex-col pb-4  gap-4 max-w-[800px] mx-auto w-full">
+        <FormUploadFilm
+          setTitleFlim={setTitleFlim}
+          description={description}
+          titleFlim={titleFlim}
+          setDescription={setDescription}
         />
 
-        <div className="max-w-[500px] mx-auto my-2">
-          <iframe
-            ref={iframeRef}
-            id="video"
-            width="400"
-            height="240"
-            className={`w-[500px] h-[400px] `}
-            style={{ display: 'none', border: 'none' }} // Ẩn iframe mặc định
-          ></iframe>
+        <div className="flex  flex-col gap-2">
+          <label>Chọn hình muốn upload :</label>
+          <input
+            ref={imageInput}
+            type="file"
+            accept="image/*"
+            name="input_image"
+          />
+
+          <div className="max-w-[300px] mx-auto">
+            <img
+              ref={imgShowRef}
+              src=""
+              alt=""
+              className="   rounded-xl  object-cover"
+            />
+          </div>
         </div>
+
+        <div className="flex flex-col gap-2">
+          <label>Chọn video muốn upload :</label>
+          <input
+            ref={videoInput}
+            type="file"
+            id="input"
+            name="input_video"
+            accept="video/*"
+          />
+
+          <div className="max-md:max-w-[200px] mx-auto">
+            <iframe
+              ref={iframeRef}
+              id="video"
+              width="400"
+              height="240"
+              className={`w-[500px] h-[400px] max-md:max-w-[200px]    rounded-xl `}
+              style={{ display: 'none', border: 'none' }} // Ẩn iframe mặc định
+              allow="autoplay; accelerometer;   clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share;  "
+              referrerPolicy="strict-origin-when-cross-origin"
+            ></iframe>
+          </div>
+        </div>
+
         {duration !== null && (
           <div className="text-center mt-2">{duration}</div>
         )}
@@ -188,7 +189,13 @@ const UploadFlim = () => {
               : 'bg-slate-500'
           }`}
           onClick={uploadVideo}
-          disabled={disableSendVideo}
+          disabled={
+            description.length > 0 &&
+            titleFlim.length > 0 &&
+            disableSendVideo !== true
+              ? false
+              : true
+          }
         >
           Send Video
         </button>
