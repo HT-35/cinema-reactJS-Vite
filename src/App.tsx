@@ -9,10 +9,12 @@ import Admin from '@/layout/Admin';
 import Dashboard from '@/pages/Dashboard';
 import ListFlim from '@/pages/ListFlim';
 import UploadFlim from '@/pages/UploadFlim';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
     <BrowserRouter>
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />

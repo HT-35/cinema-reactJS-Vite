@@ -17,3 +17,19 @@ body {
   margin: 0;
   padding: 0;
 }
+
+label {
+  cursor: pointer;
+  /* Style as you please, it will become the visible UI component. */
+}
+
+#input_image {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}
+#input_video {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}

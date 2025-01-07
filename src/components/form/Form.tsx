@@ -2,17 +2,30 @@ import { Form, Input } from 'antd';
 
 const { TextArea } = Input;
 
+import './index.css';
+import { useEffect } from 'react';
+
 const FormUploadFilm = ({
   setTitleFlim,
   setDescription,
   titleFlim,
   description,
+  setYear,
+  year,
 }: {
   setTitleFlim: (title: string) => void;
   setDescription: (description: string) => void;
   titleFlim: string;
   description: string;
+  setYear: (year: number) => void;
+  year: number;
 }) => {
+  useEffect(() => {
+    console.log(titleFlim);
+    console.log(description);
+    console.log(year);
+  }, [titleFlim, description, year]);
+
   return (
     <div className="w-full">
       <Form
@@ -20,22 +33,31 @@ const FormUploadFilm = ({
         wrapperCol={{ span: 24 }}
         layout="vertical"
         disabled={false}
-        //style={{ maxWidth: 600 }}
+        //style={{ fontSize: '20px', fontWeight: 'bold' }}
         className="w-full"
+        size="large"
       >
-        <Form.Item label="Title Flim" name="title">
+        <Form.Item label="Tên Phim" className="custom-label">
           <Input
             type="text"
-            placeholder="Title Flim"
+            placeholder="Vui lòng nhập tên phim"
             value={titleFlim}
             onChange={(e) => setTitleFlim(e.target.value)}
           />
         </Form.Item>
+        <Form.Item className="custom-label" label="Năm Sản Xuất">
+          <Input
+            type="number"
+            placeholder="Vui lòng nhập năm sản xuất"
+            value={year}
+            onChange={(e) => setYear(Number(e.target.value))}
+          />
+        </Form.Item>
 
-        <Form.Item label="Description" name="description">
+        <Form.Item className="custom-label" label="Mô Tả">
           <TextArea
             rows={4}
-            placeholder="Description"
+            placeholder="Vui lòng nhập mô tả phim"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
